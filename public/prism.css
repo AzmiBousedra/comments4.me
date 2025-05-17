@@ -1,0 +1,92 @@
+/* This is a simplified version of the Prism Dark theme, customized for your app */
+/* The main styling is handled in styles.css to maintain your dark theme */
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: white;
+    background: none;
+    text-shadow: 0 -.1em .2em black;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    hyphens: none;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    padding: .15em .2em .05em;
+    border-radius: .3em;
+    border: .13em solid hsl(30, 20%, 40%);
+    box-shadow: 1px 1px .3em -.1em black inset;
+    white-space: normal;
+}
+
+/* Then in your Prism overrides section */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: var(--syntax-comment);
+}
+
+.token.punctuation {
+    color: var(--syntax-punctuation);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+    color: var(--syntax-property);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: var(--syntax-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: var(--syntax-operator);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: var(--syntax-keyword);
+}
+
+.token.function,
+.token.class-name {
+    color: var(--syntax-function);
+}
+
+.token.regex,
+.token.important {
+    color: var(--syntax-regex);
+}
+
+.token.variable {
+    color: var(--syntax-variable);
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+    color: var(--syntax-important);
+}

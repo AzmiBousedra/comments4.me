@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments 4 me</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Prism.js CSS -->
+    <link rel="stylesheet" href="prism.css">
+    <!-- Imports Google Fonts for monospace font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Comments 4 <span class="highlight">me</span></h1>
+            <div class="typewritter">
+            <p>// Upload your code and get AI-generated comments</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <!-- Drag and drop area for file upload -->
+                <div id="drop-area" class="drop-area">
+                    <p>Drag & drop your code file here or</p>
+                    <p class="accepted">Currently working with java, python, c, c++, php, js, html, css</p>
+                    <input type="file" id="file-input" accept=".js,.py,.java,.html,.css,.cpp,.c,.php">
+                    <label for="file-input" class="file-input-label">Choose a file</label>
+                    <p id="file-name" class="file-name"></p>
+                </div>
+
+                <!-- Text area for user to input context -->
+                <div class="context-container">
+                    <label for="context-input">Provide context/instructions to the ai (optional):</label>
+                    <textarea id="context-input" placeholder="contex/instructions here"></textarea>
+                </div>
+
+                <!-- Button to trigger code processing -->
+                <div class="button-container">
+                    <button id="process-btn" class="primary-btn" disabled>Generate Comments</button>
+                </div>
+            </section>
+
+            <!-- Sections to display the original and commented code -->
+            <section class="preview-section">
+                <div class="code-container">
+                    <div class="code-header">
+                        <h3>Original Code</h3>
+                    </div>
+                    <pre><code id="original-code" class="language-none placeholder">// Your code will appear here</code></pre>
+                </div>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <h3>Commented Code</h3>
+                        <!-- Buttons for downloading and copying the commented code -->
+                        <button id="download-btn" class="secondary-btn" disabled>Download</button>
+                        <button id="copy-btn" class="secondary-btn" disabled>Copy</button>
+                    </div>
+                    <pre><code id="commented-code" class="language-none placeholder">// Commented code will appear here</code></pre>
+                </div>
+            </section>
+
+            <!-- Loading indicator displayed during comment generation -->
+            <div id="loading" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>Generating comments...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created by <a href="https://www.linkedin.com/in/azmibousedra/">Azmi-Salah Bousedra</a></p>
+            <p>Powered by <a href="https://ai.google.dev/gemini-api/docs?hl=en">Google Gemini</a>, <a href="https://prismjs.com/">Prism Js</a></p>
+        </footer>
+    </div>
+
+    <!-- Add Prism.js script before your main script -->
+    <script src="prism.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
