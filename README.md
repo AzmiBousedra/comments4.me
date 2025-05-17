@@ -43,7 +43,7 @@ Comments4.me is a Gemini powered tool that automatically comments your code for 
 
 ## Author
 - **Azmi Boucedra**  
-  - GitHub: [azmibousedra](https://github.com/azmiboucedra)
+  - GitHub: [azmibousedra](https://github.com/azmibousedra)
   - Linkedin: [azmibousedra](https://www.linkedin.com/in/azmibousedra/)
 
 
