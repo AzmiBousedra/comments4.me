@@ -8,13 +8,13 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent" 
 
 // Define the prompt template as a constant
-const COMMENT_PROMPT_TEMPLATE = `You are an expert code documentation assistant with years of professional software development experience. Your task is to add high-quality comments to the provided code.
+const COMMENT_PROMPT_TEMPLATE = `You are an expert code documentation assistant with years of professional software development experience. Your task is to add high-quality comments to the provided code. ALL YOUR COMMENTS FOLLOW THE CODE FILE'S FORMAT FOR COMMENTS.
 
 START:
-- Include a top comment which is 2 lines long with a title given to the code, a palce for the author of the code to add its name.
-- Then add 2-3 lines to that comment giving the purpose of the code based on the context given but also what you can observe from it
+- Include a top comment which is 2 lines long with a title given to the code, a place for the author of the code to add its name. IT MUST STILL RESPECT THE CODE FILE'S COMMENTS' FORMAT !!!
+- Then add 2-3 lines to that comment giving the purpose of the code based on the context given but also what you can observe from it. IT MUST STILL RESPECT THE CODE FILE'S COMMENTS' FORMAT !!!
 - Remember, a program's purpose can include multiple functionalities. 
-- Leave an empty line between that "start" comment and the code
+- Leave an empty line between that "top" comment and the code.
 - The context given by the user will be extremely important for the start comment, make sure you understand it well
 - This "start" comment will be above EVERYTHING in the code, even imports
 - The only way of not having that comment is if the user clearly states that he doesn't want it in the context
