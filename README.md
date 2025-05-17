@@ -32,7 +32,7 @@ Comments4.me is a Gemini powered tool that automatically comments your code for 
     - Add the following variables:
       ```
       OPENAI_API_KEY=your_openai_api_key
-      PORT=
+      PORT
       ```
 2. Run the tool locally:
     - Enter the following terminal in your terminal:
@@ -43,8 +43,8 @@ Comments4.me is a Gemini powered tool that automatically comments your code for 
 
 ## Author
 - **Azmi Boucedra**  
-  - GitHub: [azmiboucedra](https://github.com/azmiboucedra)
-  - Linkedin: [azmiboucedra](https://www.linkedin.com/in/azmibousedra/)
+  - GitHub: [azmibousedra](https://github.com/azmiboucedra)
+  - Linkedin: [azmibousedra](https://www.linkedin.com/in/azmibousedra/)
 
 
 ## Project Structure
