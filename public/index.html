@@ -12,19 +12,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+    <link rel="manifest" href="/public/site.webmanifest">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Comments 4 <span class="highlight">me</span></h1>
-            <div class="typewritter">
-            <p>// Upload your code and get AI-generated comments</p>
-            </div>
+            <!-- THIS IS THE KEY CHANGE - removed the typewriter div and added id="catchline" -->
+            <p id="catchline">Loading counter...</p>
         </header>
 
         <main>
@@ -41,7 +39,7 @@
                 <!-- Text area for user to input context -->
                 <div class="context-container">
                     <label for="context-input">Provide context/instructions to the ai (optional):</label>
-                    <textarea id="context-input" placeholder="contex/instructions here"></textarea>
+                    <textarea id="context-input" placeholder="context/instructions here"></textarea>
                 </div>
 
                 <!-- Button to trigger code processing -->
