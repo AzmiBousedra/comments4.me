@@ -1,4 +1,4 @@
-/* public/styles.css */
+/* public/styles.css - Fixed version without typewriter animation */
 
 /*--------------------------------------------------------------
 # Variables
@@ -97,51 +97,29 @@
     text-shadow: 0 0 33px var(--primary-glow);
   }
   
+  header p {
+    color: var(--light-text);
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-medium);
+  }
+  
+  /* KEY ADDITION - Styling for the catchline */
+  #catchline {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--light-text);
+    transition: color var(--transition-medium);
+  }
+  
+  /* Style for the green number in catchline */
+  #catchline .count-number {
+    color: var(--success-color);
+    font-weight: 600;
+    text-shadow: 0 0 10px var(--primary-glow);
+  }
+  
   .accepted {
     font-size: 0.775rem;
-  }
-  
-  /* Typewriter Animation */
-  .typewritter {
-    display: inline-block;
-    margin: 0 auto;
-  }
-  
-  .typewritter p {
-    overflow: hidden;
-    border-right: 0.15em solid var(--success-color);
-    white-space: nowrap;
-    margin: 0;
-    width: 0;
-    animation: typing-deleting 8s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
-  }
-  
-  @keyframes typing-deleting {
-    0% {
-      width: 0;
-    }
-    20% {
-      width: 100%;
-    }
-    40% {
-      width: 100%;
-    }
-    60% {
-      width: 0;
-    }
-    100% {
-      width: 0;
-    }
-  }
-  
-  @keyframes blink-caret {
-    from,
-    to {
-      border-color: transparent;
-    }
-    50% {
-      border-color: var(--success-color);
-    }
   }
   
   /*--------------------------------------------------------------
@@ -333,22 +311,20 @@
     background-color: var(--border-color);
     border-bottom: 1px solid var(--border-color);
     transition: background-color var(--transition-medium);
-    height: 48px; /* Add a fixed height to ensure consistency */
+    height: 48px;
   }
   
   .code-header h3 {
     font-size: 0.9rem;
     font-weight: 400;
     color: var(--text-color);
-    margin-right: auto; /* Push title to the left, buttons to the right */
+    margin-right: auto;
   }
   
-  /* Add this to your CSS file */
   code.placeholder {
     color: var(--light-text) !important;
   }
   
-  /* Remove the placeholder class when content changes */
   code:not(.placeholder) {
     color: inherit;
   }
@@ -392,7 +368,6 @@
   /*--------------------------------------------------------------
   # Prism.js Overrides
   --------------------------------------------------------------*/
-  /* Override Prism.js styles to match our theme */
   pre[class*="language-"] {
     background: var(--code-bg);
     margin: 0;
@@ -412,11 +387,11 @@
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: #6a9955; /* Green comments */
+    color: #6a9955;
   }
   
   .token.punctuation {
-    color: #d4d4d4; /* Light gray */
+    color: #d4d4d4;
   }
   
   .token.property,
@@ -425,7 +400,7 @@
   .token.number,
   .token.constant,
   .token.symbol {
-    color: #b5cea8; /* Light green */
+    color: #b5cea8;
   }
   
   .token.selector,
@@ -434,7 +409,7 @@
   .token.char,
   .token.builtin,
   .token.inserted {
-    color: #ce9178; /* Light orange */
+    color: #ce9178;
   }
   
   .token.operator,
@@ -442,23 +417,23 @@
   .token.url,
   .language-css .token.string,
   .style .token.string {
-    color: #d4d4d4; /* Light gray */
+    color: #d4d4d4;
   }
   
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-    color: #569cd6; /* Blue */
+    color: #569cd6;
   }
   
   .token.function,
   .token.class-name {
-    color: #dcdcaa; /* Yellow */
+    color: #dcdcaa;
   }
   
   .token.regex,
   .token.important {
-    color: #d16969; /* Red */
+    color: #d16969;
   }
   
   /*--------------------------------------------------------------
@@ -522,7 +497,6 @@
   /*--------------------------------------------------------------
   # Utilities
   --------------------------------------------------------------*/
-  /* Focus states */
   input:focus,
   textarea:focus,
   button:focus {
@@ -544,5 +518,3 @@
       overflow: auto;
     }
   }
-  
-  
