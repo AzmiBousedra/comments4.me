@@ -13,7 +13,8 @@ async function loadCounter() {
     const catchlineElement = document.getElementById('catchline');
     if (catchlineElement) {
       if (data.count > 0) {
-        catchlineElement.textContent = `// ${data.count} code files commented`;
+        // Use innerHTML to add green styling to the number
+        catchlineElement.innerHTML = `// <span class="count-number">${data.count}</span> code files commented`;
       } else {
         catchlineElement.textContent = '// Upload your code and get AI-generated comments';
       }
@@ -32,7 +33,8 @@ async function loadCounter() {
 function updateCatchline(count) {
   const catchlineElement = document.getElementById('catchline');
   if (catchlineElement && count) {
-    catchlineElement.textContent = `// ${count} code files commented`;
+    // Use innerHTML to add green styling to the number
+    catchlineElement.innerHTML = `// <span class="count-number">${count}</span> code files commented`;
   }
 }
 
