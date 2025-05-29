@@ -1,4 +1,4 @@
-/* public/styles.css */
+/* public/styles.css - Fixed version without typewriter animation */
 
 /*--------------------------------------------------------------
 # Variables
@@ -32,6 +32,18 @@
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
     --transition-slow: 0.5s ease;
+
+    /* Font Weights */
+    --font-weight-normal: 600;
+    --font-weight-medium: 750;
+    --font-weight-semibold: 1000;
+
+    /* Font Sizes */
+    --font-size-xs: 0.775rem;
+    --font-size-sm: 0.8rem;
+    --font-size-base: 0.9rem;
+    --font-size-md: 0.95rem;
+    --font-size-lg: 1.5rem;
   
     --syntax-comment: #2dd958;
     --syntax-punctuation: #a0a0a0;
@@ -87,7 +99,7 @@
   
   header h1 {
     margin-bottom: var(--spacing-xs);
-    font-size: 1.5rem;
+    font-size: var(--font-size-lg);
     text-shadow: 0 0 33px var(--light-text);
     letter-spacing: -0.5px;
   }
@@ -97,51 +109,29 @@
     text-shadow: 0 0 33px var(--primary-glow);
   }
   
+  header p {
+    color: var(--light-text);
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-medium);
+  }
+  
+  /* KEY ADDITION - Styling for the catchline */
+  #catchline {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-md);
+    color: var(--light-text);
+    transition: color var(--transition-medium);
+  }
+  
+  /* Style for the green number in catchline */
+  #catchline .count-number {
+    color: var(--success-color);
+    font-weight: var(--font-weight-semibold);
+    text-shadow: 0 0 10px var(--primary-glow);
+  }
+  
   .accepted {
-    font-size: 0.775rem;
-  }
-  
-  /* Typewriter Animation */
-  .typewritter {
-    display: inline-block;
-    margin: 0 auto;
-  }
-  
-  .typewritter p {
-    overflow: hidden;
-    border-right: 0.15em solid var(--success-color);
-    white-space: nowrap;
-    margin: 0;
-    width: 0;
-    animation: typing-deleting 8s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
-  }
-  
-  @keyframes typing-deleting {
-    0% {
-      width: 0;
-    }
-    20% {
-      width: 100%;
-    }
-    40% {
-      width: 100%;
-    }
-    60% {
-      width: 0;
-    }
-    100% {
-      width: 0;
-    }
-  }
-  
-  @keyframes blink-caret {
-    from,
-    to {
-      border-color: transparent;
-    }
-    50% {
-      border-color: var(--success-color);
-    }
+    font-size: var(--font-size-xs);
   }
   
   /*--------------------------------------------------------------
@@ -209,7 +199,7 @@
   
   .file-name {
     margin-top: var(--spacing-sm);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     color: var(--text-color);
   }
   
@@ -221,7 +211,7 @@
   .context-container label {
     display: block;
     margin-bottom: var(--spacing-sm);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
   }
   
   #context-input {
@@ -257,7 +247,7 @@
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
     border-radius: var(--border-radius);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     cursor: pointer;
     transition: all var(--transition-medium);
     font-family: "JetBrains Mono", monospace;
@@ -281,7 +271,7 @@
     border: 1px solid var(--border-color);
     margin-left: var(--spacing-sm);
     padding: 6px 12px;
-    font-size: 0.8rem;
+    font-size: var(--font-size-sm);
   }
   
   .secondary-btn:hover:not(:disabled) {
@@ -333,22 +323,21 @@
     background-color: var(--border-color);
     border-bottom: 1px solid var(--border-color);
     transition: background-color var(--transition-medium);
-    height: 48px; /* Add a fixed height to ensure consistency */
+    height: 48px;
+
   }
   
   .code-header h3 {
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
     color: var(--text-color);
-    margin-right: auto; /* Push title to the left, buttons to the right */
+    margin-right: auto;
   }
   
-  /* Add this to your CSS file */
   code.placeholder {
     color: var(--light-text) !important;
   }
   
-  /* Remove the placeholder class when content changes */
   code:not(.placeholder) {
     color: inherit;
   }
@@ -364,7 +353,7 @@
   
   code {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
     white-space: pre-wrap;
     color: var(--text-color);
   }
@@ -392,7 +381,6 @@
   /*--------------------------------------------------------------
   # Prism.js Overrides
   --------------------------------------------------------------*/
-  /* Override Prism.js styles to match our theme */
   pre[class*="language-"] {
     background: var(--code-bg);
     margin: 0;
@@ -404,7 +392,7 @@
   
   code[class*="language-"] {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
     text-shadow: none;
   }
   
@@ -412,11 +400,11 @@
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: #6a9955; /* Green comments */
+    color: #6a9955;
   }
   
   .token.punctuation {
-    color: #d4d4d4; /* Light gray */
+    color: #d4d4d4;
   }
   
   .token.property,
@@ -425,7 +413,7 @@
   .token.number,
   .token.constant,
   .token.symbol {
-    color: #b5cea8; /* Light green */
+    color: #b5cea8;
   }
   
   .token.selector,
@@ -434,7 +422,7 @@
   .token.char,
   .token.builtin,
   .token.inserted {
-    color: #ce9178; /* Light orange */
+    color: #ce9178;
   }
   
   .token.operator,
@@ -442,23 +430,23 @@
   .token.url,
   .language-css .token.string,
   .style .token.string {
-    color: #d4d4d4; /* Light gray */
+    color: #d4d4d4;
   }
   
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-    color: #569cd6; /* Blue */
+    color: #569cd6;
   }
   
   .token.function,
   .token.class-name {
-    color: #dcdcaa; /* Yellow */
+    color: #dcdcaa;
   }
   
   .token.regex,
   .token.important {
-    color: #d16969; /* Red */
+    color: #d16969;
   }
   
   /*--------------------------------------------------------------
@@ -504,7 +492,7 @@
     padding: var(--spacing-md);
     background-color: var(--footer-bg);
     color: var(--light-text);
-    font-size: 0.8rem;
+    font-size: var(--font-size-sm);
   }
   
   a {
@@ -522,7 +510,6 @@
   /*--------------------------------------------------------------
   # Utilities
   --------------------------------------------------------------*/
-  /* Focus states */
   input:focus,
   textarea:focus,
   button:focus {
@@ -544,5 +531,3 @@
       overflow: auto;
     }
   }
-  
-  

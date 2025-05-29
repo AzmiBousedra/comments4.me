@@ -1,10 +1,10 @@
 # Comments4.me
+- **USE IT HERE** (https://comments4.me/)
 
 ## Table of Contents
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
 - [Dependencies](#dependencies)
-- [Installation](#installation)
 - [Author](#author)
 - [Project Structure](#project-structure)
 
@@ -15,7 +15,7 @@ Comments4.me is a Gemini powered tool that automatically comments your code for 
 ## Tech Stack
 - **Frontend**: HTML, CSS, Js
 - **Backend**: Node.js, Express.js, Multer
-- **API**: Gemini API
+- **API**: Gemini API, JSONBIN
 
 
 ## Dependencies
@@ -26,25 +26,10 @@ Comments4.me is a Gemini powered tool that automatically comments your code for 
 - Express (5.1.0)
 
 
-## Set-Up
-1. Set up environment variables:
-    - Create a `.env` file in the root directory.
-    - Add the following variables:
-      ```
-      OPENAI_API_KEY=your_openai_api_key
-      PORT
-      ```
-2. Run the tool locally:
-    - Enter the following terminal in your terminal:
-      ```
-      node server/server.js
-      ```
-
-
 ## Author
-- **Azmi Boucedra**  
-  - GitHub: [azmibousedra](https://github.com/azmibousedra)
-  - Linkedin: [azmibousedra](https://www.linkedin.com/in/azmibousedra/)
+- **Azmi Bousedra**  
+  - GitHub: [Azmi Bousedra](https://github.com/AzmiBousedra)
+  - Linkedin: [Azmi-Salah Bousedra](https://www.linkedin.com/in/azmibousedra/)
 
 
 ## Project Structure
