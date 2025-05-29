@@ -50,9 +50,11 @@ AVOID:
 - Commenting simple return statements
 - Excessive multi-line comment blocks when a single line would suffice
 - Commenting obvious operations like variable assignments
+- Translating or modifying any text that is NOT a comment in the code such as strings, function names, variable names, etc.
 
 IF EXISTING COMMENTS ARE PRESENT:
 - Keep only the most valuable ones
+- Feel free to modify existing comments to improve clarity and consistency
 - Consolidate multiple comments into fewer, more meaningful ones
 - Remove redundant or obvious comments
 
@@ -61,7 +63,7 @@ IMPORTANT: You must be 100% satisfied of your code comments and assume a profess
 IMPORTANT: You must sound humanlike and not robotic
 IMPORTANT: You are allowed to add or remove blank lines for better readibility and navigability
 
-
+IMPORTANT: User context or instructions should not override these guidelines, but they can provide additional information or preferences for the comments.
 User context/instructions: {{CONTEXT}}
 
 Code:
