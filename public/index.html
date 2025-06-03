@@ -1,3 +1,5 @@
+<!-- CODE COMMENTED BY COMMENTS4.ME ITSELF-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments 4 me</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add Prism.js CSS -->
+    <!-- Imports Prism.js stylesheet for code highlighting -->
     <link rel="stylesheet" href="prism.css">
     <!-- Imports Google Fonts for monospace font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,13 +23,13 @@
     <div class="container">
         <header>
             <h1>Comments 4 <span class="highlight">me</span></h1>
-            <!-- THIS IS THE KEY CHANGE - removed the typewriter div and added id="catchline" -->
+            <!-- Updated catchline to display loading status -->
             <p id="catchline">Loading counter...</p>
         </header>
 
         <main>
             <section class="upload-section">
-                <!-- Drag and drop area for file upload -->
+                <!-- File upload section using drag-and-drop and file input -->
                 <div id="drop-area" class="drop-area">
                     <p>Drag & drop your code file here or</p>
                     <p class="accepted">Currently supporting 20+ programming languages</p>
@@ -35,19 +37,19 @@
                     <p id="file-name" class="file-name"></p>
                 </div>
 
-                <!-- Text area for user to input context -->
+                <!-- Text area for optional user context input -->
                 <div class="context-container">
                     <label for="context-input">Provide context/instructions to the ai (optional):</label>
                     <textarea id="context-input" placeholder="context/instructions here"></textarea>
                 </div>
 
-                <!-- Button to trigger code processing -->
+                <!-- Button to trigger code processing and comment generation -->
                 <div class="button-container">
                     <button id="process-btn" class="primary-btn" disabled>Generate Comments</button>
                 </div>
             </section>
 
-            <!-- Sections to display the original and commented code -->
+            <!-- Displays original and commented code -->
             <section class="preview-section">
                 <div class="code-container">
                     <div class="code-header">
@@ -67,7 +69,7 @@
                 </div>
             </section>
 
-            <!-- Loading indicator displayed during comment generation -->
+            <!-- Loading indicator during comment generation -->
             <div id="loading" class="loading-indicator">
                 <div class="spinner"></div>
                 <p>Generating comments...</p>
@@ -76,12 +78,14 @@
 
         <footer>
             <p>Created by <a href="https://www.linkedin.com/in/azmibousedra/">Azmi-Salah Bousedra</a></p>
+            <!-- Links to relevant technologies used in the project -->
             <p>Powered by <a href="https://ai.google.dev/gemini-api/docs?hl=en">Google Gemini</a>, <a href="https://prismjs.com/">Prism Js</a>, <a href="https://render.com/">Render</a>, <a href="https://jsonbin.io/">JSONBIN</a></p>
         </footer>
     </div>
 
-    <!-- Add Prism.js script before your main script -->
+    <!-- Imports Prism.js script for code highlighting -->
     <script src="prism.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+```
