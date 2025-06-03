@@ -1,13 +1,15 @@
-// server/ai-service.js
+/** CODE COMMENTED BY COMMENTS4.ME ITSELF **/
 
-require("dotenv").config()
+// Imports necessary modules
+const { config } = require("dotenv")
+config()
 
-// Get API key from environment variables
+// Get API key from environment variables.  The API key is crucial for accessing the Gemini API.
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
-// Ensure this URL is correct for the Gemini API version you intend to use
+// Ensure this URL is correct for the Gemini API version you intend to use.  Incorrect URLs will lead to API errors.
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent" 
 
-// Define the prompt template as a constant
+// Define the prompt template as a constant.  This template will be used to construct the request to the Gemini API.
 const COMMENT_PROMPT_TEMPLATE = `You are an expert code documentation assistant with years of professional software development experience. Your task is to add high-quality comments to the provided code. ALL YOUR COMMENTS FOLLOW THE CODE FILE'S FORMAT FOR COMMENTS.
 
 START:
@@ -58,7 +60,7 @@ IF EXISTING COMMENTS ARE PRESENT:
 - Consolidate multiple comments into fewer, more meaningful ones
 - Remove redundant or obvious comments
 
-IMPORTANT: Return ONLY the code with your added comments. Do not wrap the code in markdown code blocks (do not use \`\`\` at the beginning or end). Do not include any explanations outside of the code comments.
+IMPORTANT: Return ONLY the code with your added comments. Do not wrap your response in markdown code blocks (do not use \`\`\` at the beginning or end). Do not include any explanations outside of the code comments.
 IMPORTANT: You must be 100% satisfied of your code comments and assume a professional would be happy with them too
 IMPORTANT: You must sound humanlike and not robotic
 IMPORTANT: You are allowed to add or remove blank lines for better readibility and navigability
@@ -71,35 +73,36 @@ Code:
 
 Remember, do NOT wrap your response in markdown code blocks.`
 
-// Function to generate the prompt with the provided code and context
+// generatePrompt function: Constructs the prompt for the Gemini API based on the provided code and context.
 function generatePrompt(code, context) {
+  // Replace placeholders in the template with actual code and context.  Handles cases where context is missing.
   return COMMENT_PROMPT_TEMPLATE.replace("{{CONTEXT}}", context || "No context provided").replace("{{CODE}}", code)
 }
 
-// Modified function to generate comments using Google's Gemini API with fetch
+// generateComments: Asynchronously generates code comments using Google's Gemini API.
 async function generateComments(code, context) {
   try {
-    // If no API key, return simulated comments for testing
+    // Check for API key; if missing, use simulated comments for testing or development.
     if (!GEMINI_API_KEY) {
       console.log("Using simulated comments (no API key provided)")
       return simulateComments(code, context)
     }
 
-    // Generate the prompt using the template
+    // Generate the prompt for the Gemini API call
     const prompt = generatePrompt(code, context)
 
-    // Call the Gemini API using fetch
+    // Make API request using fetch
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ // Stringify the body
+      body: JSON.stringify({ // Send the prompt as JSON
         contents: [
           {
             parts: [
               {
-                text: prompt, // Use the generated prompt
+                text: prompt, // Include the prompt in the request body
               },
             ],
           },
@@ -107,53 +110,55 @@ async function generateComments(code, context) {
       }),
     });
 
-    // Check if the request was successful
+    // Handle unsuccessful API responses
     if (!response.ok) {
-      // Attempt to parse error details from the response body
+      // Attempt to extract detailed error message from response body
       let errorDetails = 'Unknown error';
       try {
           const errorData = await response.json();
-          // Adjust error message extraction based on actual API error structure
+          // Attempt to parse specific error details based on the API's error response structure
           errorDetails = errorData?.error?.message || JSON.stringify(errorData); 
       } catch (parseError) {
-          // If parsing fails, use the response status text
+          // Fallback to using response status text if JSON parsing fails
           errorDetails = response.statusText;
       }
+      // Throw an error including the status code and details
       throw new Error(`API request failed with status ${response.status}: ${errorDetails}`);
     }
 
-    // Parse the JSON response
+    // Parse the JSON response from the Gemini API
     const data = await response.json();
 
-    // Extract the generated text from the response
-    // Adjust the path based on the actual Gemini API response structure
+    // Extract commented code from the API response.  Robust error handling to manage various response structures.
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0]) {
         throw new Error("Invalid response structure received from API");
     }
     const commentedCode = data.candidates[0].content.parts[0].text
 
+    // Return the generated comments
     return commentedCode
   } catch (error) {
-    // Log the detailed error and throw a more general one for the client
+    // Log detailed error message for debugging and re-throw a more user-friendly message
     console.error("Error calling Gemini API:", error.message) 
     throw new Error("Failed to generate comments: " + error.message);
   }
 }
 
-// Function to simulate comments for testing when API is unavailable
+// simulateComments function: Generates simulated comments for testing when the API is not available.
 function simulateComments(code, context) {
   console.log("Using simulated comments, check API call")
 
   const headerComment = `
 /**
  * Code commented by Comments.ai (API NOT CALLED)
- * * Context: ${context || "No specific context provided"}
+ * Context: ${context || "No specific context provided"}
  */
 `
-  // Return the code with just the header comment
+  // Return simulated header comment and the original code
   return headerComment + code
 }
 
+// Export the generateComments function for use in other modules
 module.exports = {
   generateComments,
 }
