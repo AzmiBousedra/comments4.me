@@ -1,24 +1,26 @@
-// server/server.js - JSONBin.io Version
+/** CODE COMMENTED BY COMMENTS4.ME ITSELF **/
 
-const express = require('express');
-const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
-const { generateComments } = require('./ai-service');
+
+const express = require('express'); // Imports the express library for creating the web server
+const cors = require('cors'); // Imports the cors library for enabling Cross-Origin Resource Sharing
+const multer = require('multer'); // Imports the multer library for handling file uploads
+const path = require('path'); // Imports the path library for working with file paths
+const { generateComments } = require('./ai-service'); // Imports the generateComments function from the ai-service module
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware to enable CORS, JSON body parsing, and serving static files
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Configure multer for file uploads
+// Configure multer for handling file uploads in memory
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// JSONBin.io Configuration
+// JSONBin.io configuration - Replace with your actual API key and bin ID
 const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
 const JSONBIN_BIN_ID = '68369a7a8a456b7966a64adb'; // Your Bin ID
 
@@ -26,7 +28,11 @@ console.log('🔧 JSONBin Configuration:');
 console.log('📦 Bin ID:', JSONBIN_BIN_ID);
 console.log('🔑 API Key:', JSONBIN_API_KEY ? 'Set ✅' : 'Missing ❌');
 
-// Function to get counter from JSONBin
+// Function to asynchronously retrieve the click counter from JSONBin.io
+/**
+ * Retrieves the current counter value from JSONBin.io.  Handles cases where the API key is missing.
+ * @returns {number} The current counter value, or 0 if there's an error or no API key.
+ */
 async function getCounter() {
   try {
     if (!JSONBIN_API_KEY) {
@@ -43,7 +49,7 @@ async function getCounter() {
     
     if (response.ok) {
       const data = await response.json();
-      const count = data.record?.count || 0;
+      const count = data.record?.count || 0; // Use 0 as default if count is not found
       console.log('📊 Counter loaded:', count);
       return count;
     } else {
@@ -56,7 +62,11 @@ async function getCounter() {
   }
 }
 
-// Function to increment counter in JSONBin
+// Function to asynchronously increment the click counter in JSONBin.io
+/**
+ * Increments the counter in JSONBin.io.  Falls back to a simple increment if the API key is missing.
+ * @returns {number|null} The new counter value, or the old value if the update fails, or null if there's an error.
+ */
 async function incrementCounter() {
   try {
     if (!JSONBIN_API_KEY) {
@@ -97,7 +107,10 @@ async function incrementCounter() {
   }
 }
 
-// API endpoint to get current counter value
+// API endpoint to get the current counter value
+/**
+ * GET /api/counter: Returns the current click counter value.
+ */
 app.get('/api/counter', async (req, res) => {
   console.log('🌐 GET /api/counter requested');
   try {
@@ -110,7 +123,11 @@ app.get('/api/counter', async (req, res) => {
   }
 });
 
-// API endpoint for processing code with counter
+// API endpoint to process code and generate comments
+/**
+ * POST /api/generate-comments: Processes code, generates comments, and updates the counter.
+ * Accepts code either as a file upload or in the request body.
+ */
 app.post('/api/generate-comments', upload.single('codeFile'), async (req, res) => {
   console.log('🌐 POST /api/generate-comments requested');
   
@@ -132,12 +149,12 @@ app.post('/api/generate-comments', upload.single('codeFile'), async (req, res) =
     // Generate comments using the AI service
     const commentedCode = await generateComments(code, context);
     
-    // Only increment counter after successful comment generation
+    // Increment counter after successful comment generation
     const newCount = await incrementCounter();
     
     console.log('✅ Code processing successful, new count:', newCount);
     
-    // Return the commented code along with the new count
+    // Return the commented code and the new count
     res.json({ 
       commentedCode,
       clickCount: newCount 
@@ -151,7 +168,10 @@ app.post('/api/generate-comments', upload.single('codeFile'), async (req, res) =
   }
 });
 
-// Test endpoint to manually increment counter (for testing)
+// Test endpoint to manually increment the counter
+/**
+ * POST /api/test-counter: Test endpoint to manually increment the counter (for testing purposes).
+ */
 app.post('/api/test-counter', async (req, res) => {
   console.log('🧪 Test counter endpoint called');
   try {
@@ -166,6 +186,9 @@ app.post('/api/test-counter', async (req, res) => {
 });
 
 // Health check endpoint
+/**
+ * GET /api/health: Returns the server's health status, current counter value, and timestamp.
+ */
 app.get('/api/health', async (req, res) => {
   const currentCount = await getCounter();
   res.json({ 
@@ -176,7 +199,7 @@ app.get('/api/health', async (req, res) => {
   });
 });
 
-// Start the server
+// Start the server and log startup messages including initial counter value
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log('📊 Using JSONBin.io for persistent counter storage');
