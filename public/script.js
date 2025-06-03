@@ -1,19 +1,26 @@
-// public/script.js - Complete version with counter integration
+/** CODE COMMENTED BY COMMENTS4.ME ITSELF **/
 
-// Function to load and display current counter
+
+
+// Function to asynchronously fetch and display the code files commented counter
 async function loadCounter() {
   try {
+    // Fetch the counter value from the server
     const response = await fetch('/api/counter');
+    // Throw an error if the response is not ok
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    // Parse the JSON response
     const data = await response.json();
     
-    // Update the catchline with the counter
+    // Get the catchline element
     const catchlineElement = document.getElementById('catchline');
+    // Check if the element exists
     if (catchlineElement) {
+      // Update the catchline based on the counter value
       if (data.count > 0) {
-        // Use innerHTML to add green styling to the number
+        // Add green styling to the number of commented code files
         catchlineElement.innerHTML = `// <span class="count-number">${data.count}</span> code files commented`;
       } else {
         catchlineElement.textContent = '// Upload your code and get AI-generated comments';
@@ -21,24 +28,36 @@ async function loadCounter() {
     }
   } catch (error) {
     console.error('Error loading counter:', error);
-    // Keep default text if error
+    // Get the catchline element
     const catchlineElement = document.getElementById('catchline');
+    // Check if the element exists
     if (catchlineElement) {
+      // Display default text if an error occurs
       catchlineElement.textContent = '// Upload your code and get AI-generated comments';
     }
   }
 }
 
-// Function to update catchline with new count
+// Function to update the catchline with a new count
 function updateCatchline(count) {
+  // Get the catchline element
   const catchlineElement = document.getElementById('catchline');
+  // Check if the element and count exist
   if (catchlineElement && count) {
-    // Use innerHTML to add green styling to the number
+    // Add green styling to the number of commented code files
     catchlineElement.innerHTML = `// <span class="count-number">${count}</span> code files commented`;
   }
 }
 
-// DOM elements
+// Class to represent a file (optional, depends on the overall application design)
+// This could be expanded for more complex file handling needs.  Example:
+// class FileHandler {
+//   constructor(file) { this.file = file; }
+//   // ... methods for file processing ...
+// }
+
+
+// Define DOM elements for easier access and manipulation
 const dropArea = document.getElementById('drop-area');
 const fileInput = document.getElementById('file-input');
 const processBtn = document.getElementById('process-btn');
@@ -50,83 +69,96 @@ const fileName = document.getElementById('file-name');
 const downloadBtn = document.getElementById('download-btn');
 const copyBtn = document.getElementById('copy-btn');
 
-let selectedFile = null;
-let currentFileName = '';
+let selectedFile = null; // Variable to store the selected file
+let currentFileName = ''; // Variable to store the current file name
 
-// Prevent default drag behaviors
+// Prevent default drag-and-drop behaviors
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
     dropArea.addEventListener(eventName, preventDefaults, false);
     document.body.addEventListener(eventName, preventDefaults, false);
 });
 
+// Helper function to prevent default drag behaviors
 function preventDefaults(e) {
     e.preventDefault();
     e.stopPropagation();
 }
 
-// Highlight drop area when item is dragged over it
+// Highlight drop area when file is dragged over it
 ['dragenter', 'dragover'].forEach(eventName => {
     dropArea.addEventListener(eventName, highlight, false);
 });
 
+// Remove highlight when file is dragged out
 ['dragleave', 'drop'].forEach(eventName => {
     dropArea.addEventListener(eventName, unhighlight, false);
 });
 
+// Function to add highlight class
 function highlight(e) {
     dropArea.classList.add('highlight');
 }
 
+// Function to remove highlight class
 function unhighlight(e) {
     dropArea.classList.remove('highlight');
 }
 
-// Handle dropped files
+// Handle file drop event
 dropArea.addEventListener('drop', handleDrop, false);
 
+// Function to handle dropped files
 function handleDrop(e) {
     const dt = e.dataTransfer;
     const files = dt.files;
     handleFiles(files);
 }
 
-// Handle file input change
+// Handle file input change event
 fileInput.addEventListener('change', function(e) {
     handleFiles(e.target.files);
 });
 
-// Process selected files
+// Function to process the selected files
 function handleFiles(files) {
+    // Check if any files were selected
     if (files.length > 0) {
         selectedFile = files[0];
         currentFileName = selectedFile.name;
         fileName.textContent = `Selected: ${currentFileName}`;
         
-        // Read and display the original code
+        // Create a new FileReader object
         const reader = new FileReader();
+        // Read the file as text
         reader.onload = function(e) {
+            // Get the file content
             const code = e.target.result;
+            // Display the original code
             originalCode.textContent = code;
             originalCode.classList.remove('placeholder');
             
-            // Detect language and apply syntax highlighting
+            // Detect the programming language
             const language = detectLanguage(currentFileName);
+            // Apply syntax highlighting
             originalCode.className = `language-${language}`;
             
-            // Apply Prism highlighting if Prism is loaded
+            // Apply Prism highlighting if available
             if (typeof Prism !== 'undefined') {
                 Prism.highlightElement(originalCode);
             }
         };
         reader.readAsText(selectedFile);
         
+        // Enable process button
         processBtn.disabled = false;
     }
 }
 
-// Detect programming language from file extension
+// Function to detect programming language based on file extension
 function detectLanguage(filename) {
+    // Get the file extension
     const extension = filename.split('.').pop().toLowerCase();
+    // Map extensions to language names
     const languageMap = {
         js: 'javascript',
         py: 'python',
@@ -137,11 +169,13 @@ function detectLanguage(filename) {
         c: 'c',
         php: 'php'
     };
+    // Return language name or default to javascript
     return languageMap[extension] || 'javascript';
 }
 
-// Process button click handler with counter update
+//Process button click handler
 processBtn.addEventListener('click', async function() {
+    //If no file selected, exit
     if (!selectedFile) return;
     
     // Show loading indicator
@@ -149,17 +183,22 @@ processBtn.addEventListener('click', async function() {
     processBtn.disabled = true;
     
     try {
+        // Create FormData object
         const formData = new FormData();
+        // Append code file and context to FormData object
         formData.append('codeFile', selectedFile);
         formData.append('context', contextInput.value);
         
+        // Send POST request to generate comments
         const response = await fetch('/api/generate-comments', {
             method: 'POST',
             body: formData
         });
         
+        // Parse JSON response
         const result = await response.json();
         
+        // Check if request was successful
         if (response.ok) {
             // Display the commented code
             commentedCode.textContent = result.commentedCode;
@@ -169,7 +208,7 @@ processBtn.addEventListener('click', async function() {
             const language = detectLanguage(currentFileName);
             commentedCode.className = `language-${language}`;
             
-            // Apply Prism highlighting if Prism is loaded
+            // Apply Prism highlighting if available
             if (typeof Prism !== 'undefined') {
                 Prism.highlightElement(commentedCode);
             }
@@ -186,6 +225,7 @@ processBtn.addEventListener('click', async function() {
             console.log('Comments generated successfully. New count:', result.clickCount);
             
         } else {
+            // Throw error if request failed
             throw new Error(result.error || 'Failed to generate comments');
         }
         
@@ -207,13 +247,18 @@ processBtn.addEventListener('click', async function() {
     }
 });
 
-// Download functionality
+// Download button click handler
 downloadBtn.addEventListener('click', function() {
+    // Check if commented code exists and is not a placeholder
     if (commentedCode.textContent && !commentedCode.classList.contains('placeholder')) {
         try {
+            // Create a Blob from commented code
             const blob = new Blob([commentedCode.textContent], { type: 'text/plain' });
+            // Create a URL for the Blob
             const url = URL.createObjectURL(blob);
+            // Create a temporary anchor element
             const a = document.createElement('a');
+            // Set anchor element attributes
             a.href = url;
             a.download = `commented_${currentFileName}`;
             document.body.appendChild(a);
@@ -229,13 +274,15 @@ downloadBtn.addEventListener('click', function() {
     }
 });
 
-// Copy functionality
+// Copy button click handler
 copyBtn.addEventListener('click', async function() {
+    // Check if commented code exists and is not a placeholder
     if (commentedCode.textContent && !commentedCode.classList.contains('placeholder')) {
         try {
+            // Copy text to clipboard
             await navigator.clipboard.writeText(commentedCode.textContent);
             
-            // Visual feedback
+            // Provide visual feedback
             const originalText = copyBtn.textContent;
             copyBtn.textContent = 'Copied!';
             copyBtn.classList.add('copied');
@@ -252,6 +299,7 @@ copyBtn.addEventListener('click', async function() {
             
             // Fallback for older browsers
             try {
+                // Create a temporary textarea element
                 const textArea = document.createElement('textarea');
                 textArea.value = commentedCode.textContent;
                 document.body.appendChild(textArea);
@@ -259,7 +307,7 @@ copyBtn.addEventListener('click', async function() {
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
                 
-                // Visual feedback
+                // Provide visual feedback
                 const originalText = copyBtn.textContent;
                 copyBtn.textContent = 'Copied!';
                 copyBtn.classList.add('copied');
@@ -277,7 +325,7 @@ copyBtn.addEventListener('click', async function() {
     }
 });
 
-// Reset functionality
+// Function to reset the application state
 function resetApp() {
     selectedFile = null;
     currentFileName = '';
@@ -304,7 +352,7 @@ function resetApp() {
     fileInput.value = '';
 }
 
-// Keyboard shortcuts
+// Keyboard shortcuts for processing and resetting the app
 document.addEventListener('keydown', function(e) {
     // Ctrl/Cmd + Enter to process
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -313,14 +361,14 @@ document.addEventListener('keydown', function(e) {
         }
     }
     
-    // Ctrl/Cmd + R to reset (prevent default page reload)
+    // Ctrl/Cmd + R to reset
     if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default page reload
         resetApp();
     }
 });
 
-// Error handling for network issues
+// Event listeners for online and offline status
 window.addEventListener('online', function() {
     console.log('Network connection restored');
 });
@@ -330,14 +378,14 @@ window.addEventListener('offline', function() {
     alert('Network connection lost. Please check your internet connection.');
 });
 
-// Initialize app when DOM is loaded
+// Initialize the application when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Comments 4 me app initialized');
     
-    // Load counter on startup
+    // Load the counter on startup
     loadCounter();
     
-    // Check if all required elements exist
+    //Check for missing elements
     const requiredElements = [
         'drop-area', 'file-input', 'process-btn', 'original-code', 
         'commented-code', 'context-input', 'loading', 'file-name', 
@@ -350,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Missing required elements:', missingElements);
     }
     
-    // Initialize tooltips or help text if needed
+    // Set tooltips for buttons (optional)
     processBtn.title = 'Generate AI comments for your code (Ctrl+Enter)';
     downloadBtn.title = 'Download commented code file';
     copyBtn.title = 'Copy commented code to clipboard';
