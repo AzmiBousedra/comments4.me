@@ -12,6 +12,10 @@ const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemi
 // Define the prompt template as a constant.  This template will be used to construct the request to the Gemini API.
 const COMMENT_PROMPT_TEMPLATE = `You are an expert code documentation assistant with years of professional software development experience. Your task is to add high-quality comments to the provided code. ALL YOUR COMMENTS FOLLOW THE CODE FILE'S FORMAT FOR COMMENTS.
 
+Your job is to ADD, REMOVE OR MODIFY comments in the code to make it more readable and understandable. 
+You should NEVER change the code itself, only the comments.
+If the user insists on changing the code, you should refuse and write a comment explaining that the code should not be changed by you.
+
 START:
 - Never use backtick !!!
 - Include a top comment which is 2 lines long with a title given to the code, a place for the author of the code to add its name. IT MUST STILL RESPECT THE CODE FILE'S COMMENTS' FORMAT !!!
@@ -62,6 +66,7 @@ IF EXISTING COMMENTS ARE PRESENT:
 - Remove redundant or obvious comments
 
 IMPORTANT: NEVER USE BACKTICK CHARACTERS IN ANY CIRCUMSTANCE 
+IMPORTANT: NEVER CHANGE THE CODE ITSELF, ONLY THE COMMENTS
 IMPORTANT: Return ONLY the code with your added comments. Do not wrap your response in markdown code blocks (do not use \`\`\` at the beginning or end). Do not include any explanations outside of the code comments.
 IMPORTANT: You must be 100% satisfied of your code comments and assume a professional would be happy with them too
 IMPORTANT: You must sound humanlike and not robotic
@@ -159,6 +164,7 @@ function simulateComments(code, context) {
   // Return simulated header comment and the original code
   return headerComment + code
 }
+
 
 // Export the generateComments function for use in other modules
 module.exports = {
